@@ -13,8 +13,9 @@ go install github.com/bnprtr/tabl@latest
 ## Generating Code
 
 Tabl will parse your go or templ files and look for any struct definition that matches
-one of the regexp patterns passed in as positional argument then a table component 
-will be rendered for that data type.
+one of the strings passed in as positional argument then a table component 
+will be rendered for that data type. If no positional arguments are specified then
+all struct type definitions in the file will be used for tabl compont generation.
 
 The code generated will be written out to a file matching the name of the file
 parsed with the exception of the suffix being replaced with `_tabl.templ`. For example,
@@ -33,7 +34,7 @@ The following example would generate components for all data types in the file
 and write the tabl code to `view_models_tabl.templ`.
 
 ```sh
-tabl -file view_models.go .*
+tabl -file view_models.go
 ```
 
 It's also fine to use go generate!
