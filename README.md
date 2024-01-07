@@ -120,7 +120,8 @@ and Rows. You can build your own component that uses each of these:
       @PersonTableRow(person)
     }
   }
-}```
+}
+```
 
 ### Table Options
 
