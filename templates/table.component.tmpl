@@ -1,0 +1,86 @@
+{{range $index, $type := .Types -}}
+type {{$type.Name}}TableOptions struct {
+  TableAttributes templ.Attributes
+  HeadRowAttributes templ.Attributes
+  HeadFieldAttributesFunc func(fieldName string) templ.Attributes
+  BodyAttributes templ.Attributes
+}
+
+templ (rows {{$type.Name}}Components) Table(opts {{$type.Name}}TableOptions) {
+  @opts.Table(rows...)
+}
+
+templ (opts {{$type.Name}}TableOptions) Table(rows ...{{$type.Name}}) {
+  @{{$type.Name}}Table(opts.TableAttributes) {
+    { children... }
+    @{{$type.Name}}TableHead(opts.HeadRowAttributes, opts.HeadFieldAttributesFunc)
+    @{{$type.Name}}TableBody(opts.BodyAttributes) {
+      for _, row := range rows {
+        @{{$type.Name}}TableRow(row)
+      }
+    }
+  }
+}
+
+templ {{$type.Name}}Table(attrs templ.Attributes) {
+  <table { attrs... }>
+    { children... }
+  </table>
+}
+
+templ {{$type.Name}}TableHead(rowAttrs templ.Attributes, fieldAttributesFunc func(fieldName string) templ.Attributes) {
+  <thead { rowAttrs... }>
+    <tr>{{range $index, $field := .Properties }}
+      <th { compl{{$type.Name}}ExecAttributeFunc(fieldAttributesFunc, "{{$field.Name}}")... }>{{$field.Name}}</th>
+      {{- end}}
+    </tr>
+  </thead>
+}
+
+templ {{$type.Name}}TableBody(attrs templ.Attributes) {
+    <tbody { attrs... }>
+      { children... } 
+    </tbody>
+}
+
+templ {{$type.Name}}TableRow(row {{$type.Name}}) {
+    <tr { compl{{$type.Name}}GetRowAttributes(row)... }>
+      {{- range $index, $field := .Properties }}
+      <td  { compl{{$type.Name}}GetFieldAttributes(row, "{{$field.FieldName}}")...} >{{ "{" }}compl{{$type.Name}}AnyToString(row.{{$field.FieldName}}){{ "}" }}</td>
+      {{- end}}
+    </tr>
+}
+
+type {{$type.Name}}TableRowAttributor interface {
+	TableRowAttributes() templ.Attributes
+}
+
+func compl{{$type.Name}}GetRowAttributes(val any) templ.Attributes {
+	if attr, ok := val.({{$type.Name}}TableRowAttributor); ok {
+		return attr.TableRowAttributes()
+	}
+	return nil
+}
+
+type {{$type.Name}}TableColumnAttributor interface {
+	TableColumnAttributes(fieldName string) templ.Attributes
+}
+
+func compl{{$type.Name}}GetFieldAttributes(val any, fieldName string) templ.Attributes {
+	if attr, ok := val.({{$type.Name}}TableColumnAttributor); ok {
+		return attr.TableColumnAttributes(fieldName)
+	}
+	return nil
+}
+
+func compl{{$type.Name}}ExecAttributeFunc(f func(string) templ.Attributes, selector string) templ.Attributes {
+	if f == nil {
+		return nil
+	}
+	return f(selector)
+}
+
+func compl{{$type.Name}}AnyToString(value interface{}) string {
+	return fmt.Sprintf("%v", value)
+}
+{{end}}
