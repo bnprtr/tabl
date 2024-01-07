@@ -4,6 +4,12 @@
 
 [Templ](https://templ.guide) Table Component Generator
 
+## Installation
+
+```sh
+go install github.com/bnprtr/tabl@latest
+```
+
 ## Generating Code
 
 Tabl will parse your go or templ files and look for any struct definition that matches
