@@ -1,6 +1,7 @@
 # tabl
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/bnprtr/tabl.svg)](https://pkg.go.dev/github.com/bnprtr/tabl)
+
 [Templ](https://templ.guide) Table Component Generator
 
 ## Generating Code
@@ -38,7 +39,7 @@ for the property's column head row. If no value is set, then the property name
 is used. To leave the column head empty, you can set the name struct tag to `-`.
 
 Additionally, you can designate a property to be skipped from being rendered entirely
-by setting the `tabl` struct tag to `-` (`\`tabl:"-"\“). This is useful for storing
+by setting the `tabl` struct tag to `-`: ````tabl:"-"````. This is useful for storing
 attributes that may be used during render calls for each row. Perhaps something like
 a resource ID or row ID which may be injected into the table row attributes.
 
