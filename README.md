@@ -30,6 +30,18 @@ and write the tabl code to `view_models_tabl.templ`.
 tabl -file view_models.go .*
 ```
 
+It's also fine to use go generate!
+
+```go
+//go:generate go run github.com/bnprtr/tabl@latest -file views.go
+package views
+
+type DataType {
+  Property1 string
+  Property2 int
+}
+```
+
 ## Data Types
 
 Tabl will parse the targeted struct definition and extract some information from
