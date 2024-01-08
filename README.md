@@ -119,7 +119,7 @@ and Rows. You can build your own component that uses each of these:
 ```templ
 @PersonTable(nil) {
   <caption class="caption-bottom">
-    Table 3.14: Persons guilty of a soggy bottom
+    Table 3.14: It's just an example...
   </caption>
   @PersonTableHead(nil, nil)
   @PersonTableBody(nil) {
@@ -194,7 +194,7 @@ the `Data Types` section for more details.
 ```templ
 @PersonTable(templ.Attributes{"class": "border border-slate-800 border-collapse text-center rounded-md"}) {
   <caption class="caption-bottom">
-    Table 3.14: Persons guilty of a soggy bottom
+    Table 3.14: It's just an example
   </caption>
   @PersonTableHead(templ.Attributes{"class": "border border-slate-800 border-collapse bg-slate-700/30"}, func(string) templ.Attributes{
     return templ.Attributes{"class": "border border-slate-800 border-collapse"}
